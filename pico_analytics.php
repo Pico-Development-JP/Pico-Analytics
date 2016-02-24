@@ -6,18 +6,20 @@
  * @author TakamiChie
  */
  
-class Pico_Analytics {
+class Pico_Analytics extends AbstractPicoPlugin {
+
+  protected $enabled = false;
 
   private $analytics_code = null;
 
-  public function config_loaded(&$settings)
+  public function onConfigLoaded(array &$config)
   {
-    if(isset($settings['google_analytics_id'])){
-      $this->analytics_code = $settings['google_analytics_id'];
+    if(isset($config['google_analytics_id'])){
+      $this->analytics_code = $config['google_analytics_id'];
     }
   }
 
-  public function after_render(&$output)
+  public function onPageRendered(&$output)
   {
     if($this->analytics_code){
       $id = $this->analytics_code;
